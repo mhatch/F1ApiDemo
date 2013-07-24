@@ -1,0 +1,25 @@
+﻿@model IEnumerable<FellowshipOneAPIDemo.Models.Person>
+
+@{
+    ViewBag.Title = "Household";
+}
+
+<h2>Household Members</h2>
+<br />
+
+   <div class="search-results">   
+    @if (Model != null)
+    {
+        
+        foreach (var person in Model)
+        { 
+        <div class="search-row">
+            <div class="search-col">@person.FirstName</div>
+            <div class="search-col">@person.LastName</div>
+            <div class="search-col">@Html.ActionLink("Communications", "Communications", "Person", new { id = person.Id }, null)</div>
+            <br class="last" />
+        </div>
+            
+        }
+    }
+  </div>

@@ -1,0 +1,43 @@
+﻿@model FellowshipOneAPIDemo.Models.Communication
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Add Communication</h2>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <ul>
+            <li>
+                @Html.LabelFor(m => m.CommunicationType)
+                @Html.TextBoxFor(m => m.CommunicationType)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CommunicationGeneralType)
+                @Html.TextBoxFor(m => m.CommunicationGeneralType)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CommunicationValue)
+                @Html.TextBoxFor(m => m.CommunicationValue)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Preferred)
+                @Html.TextBoxFor(m => m.Preferred)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.CommunicationComment)
+                @Html.TextBoxFor(m => m.CommunicationComment)
+            </li>
+        </ul>
+        <input type="hidden" value="@ViewBag.HHID" name="household_id"/>
+        <input type="submit" value="Add Communication" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

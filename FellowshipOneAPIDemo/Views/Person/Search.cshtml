@@ -1,0 +1,13 @@
+﻿@model IEnumerable<FellowshipOneAPIDemo.Models.Person>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+<ul>
+    @foreach (var person in Model)
+    {
+        <li>@person.FirstName @person.LastName</li>
+    }
+</ul>

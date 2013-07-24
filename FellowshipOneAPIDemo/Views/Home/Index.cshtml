@@ -1,0 +1,60 @@
+﻿@model IEnumerable<FellowshipOneAPIDemo.Models.Person>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script type="text/javascript">
+
+</script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+        <fieldset>
+        <div style="width:100%;">
+            <div style="float:left;">@Html.Label("First Name") @Html.TextBox("FirstName")</div>
+            <div style="float:left;">@Html.Label("Last Name") @Html.TextBox("LastName")</div>
+            <div style="float:left;padding-left:15px;padding-top:18px;"><input type="submit" value="Search" /></div>
+        </div>
+    </fieldset>
+}
+
+
+
+    
+    <div class="search-results">   
+    @if (Model != null)
+    {
+        if (ViewBag.Count > 0)
+        {
+
+            foreach (var person in Model)
+            { 
+            <div class="search-row">
+                <div class="search-col">@person.FirstName
+                </div>
+                <div class="search-col">@person.LastName</div>
+                <div class="search-col">@Html.ActionLink("Household", "Household", "Person", new { id = person.HouseholdId }, null)</div>
+                <div class="search-col">@Html.ActionLink("Address", "Address", "Person", new { id = person.Id }, null)</div>
+                <div class="search-col">@Html.ActionLink("Communications", "Communications", "Person", new { id = person.Id }, null)</div>
+                <br class="last" />
+            </div>
+            
+            }
+        }
+        else
+        { 
+           <div style="width:100%;text-align:center;">No results found</div>    
+        }
+   }
+
+  </div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

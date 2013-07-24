@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FellowshipOneAPIDemo.Models.Address>
+
+@{
+    ViewBag.Title = "Address";
+}
+
+<div style="width:100%;">
+    <h2 style="float:left;">Addresses for @ViewBag.Name</h2><span style="float:right;padding-right:15px;padding-top:30px;">@Html.ActionLink("Add Address", "Create", "Address", new { id = ViewBag.HHID }, null)</span>
+</div>
+
+
+<br style="clear:both;"/>
+
+   <div class="search-results">   
+    @if (ViewBag.Count > 0)
+    {
+
+        foreach (var address in Model)
+        { 
+        <div class="search-row">
+            <div class="search-col">@address.Address1<br />@address.Address2<br />@address.Address3</div>
+            <div class="search-col">@address.City</div>
+            <div class="search-col">@address.StProvince</div>
+            <div class="search-col">@address.PostalCode</div>
+            <div class="search-col">@Html.ActionLink("Edit", "Edit", "Address", new { id = address.Id }, null) @Html.ActionLink("Delete", "Delete", new { controller = "Address", id = address.Id, person_id = ViewBag.ID })</div>
+            <br class="last" />
+        </div>
+
+            
+        }
+    }
+    else
+    { 
+       <div style="width:100%;text-align:center;">No addresses found</div>    
+    }
+  </div>

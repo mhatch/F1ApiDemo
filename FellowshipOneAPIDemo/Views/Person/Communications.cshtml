@@ -1,0 +1,38 @@
+﻿@model IEnumerable<FellowshipOneAPIDemo.Models.Communication>
+
+@{
+    ViewBag.Title = "Communications";
+}
+
+<div style="width:100%;">
+    <h2 style="float:left;">Communications for @ViewBag.Name</h2><span style="float:right;padding-right:15px;padding-top:30px;">@Html.ActionLink("Add Communication", "Create", "Communication", new { id = ViewBag.ID }, null)</span>
+</div>
+
+
+<br class="last"/>
+
+   <div class="search-results">   
+
+@if (ViewBag.Count > 0)
+{
+
+    foreach (var communication in Model)
+    { 
+        <div class="search-row">
+            <div class="search-col">@communication.CommunicationGeneralType</div>
+            <div class="search-col">@communication.CommunicationType</div>
+            <div class="search-col">@communication.CommunicationValue</div>
+            <div class="search-col">@communication.CommunicationComment</div>
+            <div class="search-col">@Html.ActionLink("Edit", "Edit", "Communication", new { id = communication.Id }, null) @Html.ActionLink("Delete", "Delete", "Communication", new { id = communication.Id }, null)</div>
+            <br class="last" />
+        </div>
+            
+    }
+
+
+}
+else
+{
+       <div style="width:100%;text-align:center;">No communications found</div>
+}
+  </div>
