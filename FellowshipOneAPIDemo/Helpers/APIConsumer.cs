@@ -75,10 +75,10 @@ namespace FellowshipOneAPIDemo.Helpers
         /// </summary>
         /// <param name="person_id">The id of the person</param>
         /// <returns>List of Person objects</returns>
-        public List<Person> GetHousehold(int person_id)
+        public List<Person> GetHousehold(int household_id)
         {
             // create web client and call the api
-            var endPoint = String.Format("{0}/households/{1}/people?mode=demo&format=xml", apiURL, person_id.ToString());
+            var endPoint = String.Format("{0}/households/{1}/people?mode=demo&format=xml", apiURL, household_id.ToString());
             var client = new RestClient(endPoint);
             var result = client.MakeRequest();
 
@@ -100,7 +100,7 @@ namespace FellowshipOneAPIDemo.Helpers
         { 
 
             // create web client and call the api
-            var endPoint = String.Format("{0}/People/1632903/Addresses?mode=demo&format=xml", apiURL, person_id.ToString());
+            var endPoint = String.Format("{0}/People/{1}/Addresses?mode=demo&format=xml", apiURL, person_id.ToString());
             var client = new RestClient(endPoint);
             var result = client.MakeRequest();
 
@@ -111,22 +111,130 @@ namespace FellowshipOneAPIDemo.Helpers
             return this.PopulateAddresses(result_doc);
         }
 
-        public bool CreateAddress(Address model) 
+        /// <summary>
+        /// This method creates adds a new address
+        /// </summary>
+        /// <param name="model">Address model</param>
+        /// <param name="person_id">person id</param>
+        /// <returns></returns>
+        public string CreateAddress(Address model, int person_id) 
         {
+            var header_string = "";
 
-            //https://demo.fellowshiponeapi.com/v1/People/1635398/Addresses
+            // create web client and call the api
+            var endPoint = String.Format("{0}/People/{1}/Addresses?mode=demo&format=xml", apiURL, person_id.ToString());
+            var client = new RestClient(endPoint, HttpVerb.POST);
 
+            // serialize the Address obj to xml
             XmlSerializer serializer = new XmlSerializer(model.GetType());
-            var create_header = new XmlDocument();
-            var nav = create_header.CreateNavigator();
+            var doc_header = new XmlDocument();
+
+            var nav = doc_header.CreateNavigator();
             using (var writer = nav.AppendChild())
             {
                 var ser = new XmlSerializer(model.GetType());
                 ser.Serialize(writer, model);
             }
 
+            // turn xml doc to string
+            using (var stringWriter = new StringWriter())
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            {
+                doc_header.WriteTo(xmlTextWriter);
+                xmlTextWriter.Flush();
+                header_string = stringWriter.GetStringBuilder().ToString();
+            }
 
-            return true;
+            // set the post data
+            client.PostData = header_string;
+
+            return client.MakeRequest();
+
+            // construct header
+            //var doc_header = new XmlDocument();
+            //doc_header.LoadXml("<address></address>");
+            //XmlNode root = doc_header.DocumentElement;
+
+            ////Create a new node.
+            //var elem = doc_header.CreateElement("household");
+            //elem.SetAttribute("id", model.HouseholdId.ToString());
+            //elem.SetAttribute("uri", String.Format("https://demo.fellowshiponeapi.com/v1/Households/{0}", model.HouseholdId.ToString()));
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("person");
+            //elem.SetAttribute("id", person_id.ToString());
+            //elem.SetAttribute("uri", String.Format("https://demo.fellowshiponeapi.com/v1/People/{0}", person_id.ToString()));
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("addressType");
+            //elem.SetAttribute("uri", "https://demo.fellowshiponeapi.com/v1/Addresses/AddressTypes/7");
+            //var elem_child = doc_header.CreateElement("name");
+            //elem_child.InnerText = model.AddressType;
+            //elem.AppendChild(elem_child);
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("address1");
+            //elem.InnerText = model.Address1;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("address2");
+            //elem.InnerText = model.Address1;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("address3");
+            //elem.InnerText = model.Address1;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("city");
+            //elem.InnerText = model.City;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("postalCode");
+            //elem.InnerText = model.PostalCode;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("county");
+            //elem.InnerText = model.County;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("country");
+            //elem.InnerText = model.Country;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("stProvince");
+            //elem.InnerText = model.StProvince;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("carrierRoute");
+            //elem.InnerText = model.CarrierRoute;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("deliveryPoint");
+            //elem.InnerText = model.DeliveryPoint;
+            //root.AppendChild(elem);
+
+            //elem = doc_header.CreateElement("addressDate");
+            //elem.InnerText = "2001-04-11T00:00:00";
+            //root.AppendChild(elem);
+            //elem = doc_header.CreateElement("addressComment");
+            ////elem.InnerText = model.DeliveryPoint;
+            //root.AppendChild(elem);
+            //elem = doc_header.CreateElement("uspsVerified");
+            //elem.InnerText = "false";
+            //root.AppendChild(elem);
+            //elem = doc_header.CreateElement("addressVerifiedDate");
+            ////elem.InnerText = model.DeliveryPoint;
+            //root.AppendChild(elem);
+            //elem = doc_header.CreateElement("lastVerificationAttemptDate");
+            ////elem.InnerText = model.DeliveryPoint;
+            //root.AppendChild(elem);
+            //elem = doc_header.CreateElement("createdDate");
+            ////elem.InnerText = model.DeliveryPoint;
+            //root.AppendChild(elem);
+            //elem = doc_header.CreateElement("lastUpdatedDate");
+            ////elem.InnerText = model.DeliveryPoint;
+            //root.AppendChild(elem);
+
         }
 
         /// <summary>

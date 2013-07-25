@@ -45,13 +45,18 @@ namespace FellowshipOneAPIDemo.Controllers
         }
 
 
-        public ActionResult Household(int id)
+        public ActionResult Household(int id, int person_id)
         {
             ViewBag.ID = id;
 
             ApiHelper helper = new ApiHelper();
+            Person person = helper.GetPerson(person_id);
+            ViewBag.Name = String.Format("{0} {1}", person.FirstName, person.LastName);
 
-            return View(helper.GetHousehold(id));
+            var hh = helper.GetHousehold(id);
+            ViewBag.Count = hh.Count();
+
+            return View(hh);
         }
 
 

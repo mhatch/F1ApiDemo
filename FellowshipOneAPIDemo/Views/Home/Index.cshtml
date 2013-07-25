@@ -36,7 +36,7 @@
                 <div class="search-col">@person.FirstName
                 </div>
                 <div class="search-col">@person.LastName</div>
-                <div class="search-col">@Html.ActionLink("Household", "Household", "Person", new { id = person.HouseholdId }, null)</div>
+                <div class="search-col">@Html.ActionLink("Household", "Household", "Person", new { id = person.HouseholdId, person_id = person.Id }, null)</div>
                 <div class="search-col">@Html.ActionLink("Address", "Address", "Person", new { id = person.Id }, null)</div>
                 <div class="search-col">@Html.ActionLink("Communications", "Communications", "Person", new { id = person.Id }, null)</div>
                 <br class="last" />

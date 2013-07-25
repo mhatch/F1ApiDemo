@@ -5,7 +5,7 @@
 }
 
 <div style="width:100%;">
-    <h2 style="float:left;">Addresses for @ViewBag.Name</h2><span style="float:right;padding-right:15px;padding-top:30px;">@Html.ActionLink("Add Address", "Create", "Address", new { id = ViewBag.HHID }, null)</span>
+    <h2 style="float:left;">Addresses for @ViewBag.Name</h2><span style="float:right;padding-right:15px;padding-top:30px;">@Html.ActionLink("Add Address", "Create", "Address", new { household_id = ViewBag.HHID, person_id = ViewBag.ID }, null)</span>
 </div>
 
 

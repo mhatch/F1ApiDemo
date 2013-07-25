@@ -16,9 +16,7 @@ namespace FellowshipOneAPIDemo.Models
         public string Title { get; set; }
         public string Salutation { get; set; }
         public string Prefix { get; set; }
-        [Required]
         public string FirstName { get; set; }
-        [Required]
         public string LastName { get; set; }
         public int HouseholdId { get; set; }
     }

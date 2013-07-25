@@ -10,28 +10,11 @@ namespace FellowshipOneAPIDemo.Controllers
 {
     public class AddressController : Controller
     {
-        //
-        // GET: /Address/
 
-        public ActionResult Index()
+        public ActionResult Create(int household_id, int person_id)
         {
-            return View();
-        }
-
-        //
-        // GET: /Address/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Address/Create
-
-        public ActionResult Create(int id)
-        {
-            ViewBag.HHID = id;
+            ViewBag.HHID = household_id;
+            ViewBag.PersonID = person_id;
             return View();
         }
 
@@ -55,11 +38,12 @@ namespace FellowshipOneAPIDemo.Controllers
                     model.HouseholdId = 0;
                 }
 
-                helper.CreateAddress(model);
+                helper.CreateAddress(model, Convert.ToInt32(collection["person_id"]));
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception e)
             {
+                var msg = e.Message;
                 return View();
             }
         }
@@ -95,9 +79,9 @@ namespace FellowshipOneAPIDemo.Controllers
 
         public ActionResult Delete(int id, int person_id)
         {
-            var helper = new ApiHelper();
+            //var helper = new ApiHelper();
 
-            var response = helper.DeleteAddress(id);
+            //var response = helper.DeleteAddress(id);
             
             
             return View();

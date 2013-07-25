@@ -13,6 +13,7 @@ namespace FellowshipOneAPIDemo.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -20,7 +21,13 @@ namespace FellowshipOneAPIDemo.Controllers
         public ActionResult Index(Person model)
         {
 
-            if (ModelState.IsValid)
+            if (model.FirstName == null && model.LastName == null)
+            //if (ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Enter a first or last name or initial(s)");
+                return View();
+            }
+            else
             {
                 // create api helper 
                 ApiHelper helper = new ApiHelper();
@@ -29,12 +36,11 @@ namespace FellowshipOneAPIDemo.Controllers
                 var results = helper.Search(model);
                 ViewBag.Count = results.Count();
 
+                // for return link
+                ViewBag.FirstName = model.FirstName;
+                ViewBag.LastName = model.LastName;
+
                 return View(results);
-            }
-            else
-            {
-                ModelState.AddModelError("", "Both fields are required");
-                return View();
             }
         }
         

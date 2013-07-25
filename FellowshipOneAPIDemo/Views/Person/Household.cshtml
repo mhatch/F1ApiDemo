@@ -3,12 +3,14 @@
 @{
     ViewBag.Title = "Household";
 }
+<div style="width:100%;">
+    <h2 style="float:left;">Household Members of @ViewBag.Name</h2>
+</div>
 
-<h2>Household Members</h2>
-<br />
+<br class="last"/>
 
    <div class="search-results">   
-    @if (Model != null)
+    @if (ViewBag.Count > 0)
     {
         
         foreach (var person in Model)
@@ -21,5 +23,9 @@
         </div>
             
         }
+    }
+    else
+    {
+        <div style="width:100%;text-align:center;">No communications found</div>
     }
   </div>
